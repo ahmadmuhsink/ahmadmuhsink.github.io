@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ahmad Muhsin Kurnia · Mobile Engineer</title>
+  <meta name="description" content="Ahmad Muhsin Kurnia, Senior Mobile Software Engineer. Android, Kotlin, Server-Driven UI, payments and accessibility.">
+  <meta property="og:title" content="Ahmad Muhsin Kurnia · Mobile Engineer">
+  <meta property="og:description" content="Twelve years of mobile apps for retail, banking, news and food delivery. Spin the wheel to find out more.">
+  <meta property="og:url" content="https://ahmadmuhsink.github.io/">
+  <meta name="theme-color" content="#fff6e6">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <a class="logo" href="#top" aria-label="Back to top">amk<span>.</span></a>
+    <nav aria-label="Sections">
+      <a href="#wheel">Wheel</a>
+      <a href="#journey">Journey</a>
+      <a href="#powers">Superpowers</a>
+      <a href="#contact">Say hoi</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch dark mode" aria-pressed="false">
+      <span class="sun" aria-hidden="true">☀️</span><span class="moon" aria-hidden="true">🌙</span>
+    </button>
+  </header>
+
+  <aside class="stampcard" aria-label="Stamp card">
+    <p class="stampcard__title">Stamp card</p>
+    <ol class="stampcard__grid">
+      <li data-stamp="top"><span class="sr-only">Hello</span></li>
+      <li data-stamp="wheel"><span class="sr-only">Wheel</span></li>
+      <li data-stamp="journey"><span class="sr-only">Journey</span></li>
+      <li data-stamp="powers"><span class="sr-only">Superpowers</span></li>
+      <li data-stamp="extras"><span class="sr-only">Extras</span></li>
+      <li data-stamp="contact"><span class="sr-only">Contact</span></li>
+    </ol>
+    <p class="stampcard__hint" aria-live="polite">Scroll to collect</p>
+  </aside>
+
+  <main id="main">
+    <section id="top" class="hero" data-section="top">
+      <div class="hero__text">
+        <p class="eyebrow">Hoi! Halo! Hello!</p>
+        <h1>I'm <span class="squiggle">Ahmad</span>.<br>I build mobile apps that people use every day.</h1>
+        <p class="typer" aria-live="off"><span class="typer__prefix">I</span> <span class="typer__text">make checkouts less scary.</span><span class="typer__caret" aria-hidden="true"></span></p>
+        <p class="lead">Senior Mobile Software Engineer at Albert Heijn, in Gouda, the Netherlands. I like native Android and Kotlin. I also write iOS, Flutter and React Native when the job asks for it.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#wheel">Spin the wheel</a>
+          <a class="btn" href="#journey">See the journey</a>
+        </div>
+      </div>
+
+      <div class="hero__bot" aria-hidden="true">
+        <svg class="bot" viewBox="0 0 220 240" role="img">
+          <line class="bot__antenna" x1="70" y1="52" x2="48" y2="16"/>
+          <line class="bot__antenna" x1="150" y1="52" x2="172" y2="16"/>
+          <circle cx="48" cy="14" r="7" class="bot__tip"/>
+          <circle cx="172" cy="14" r="7" class="bot__tip"/>
+          <path class="bot__head" d="M20 120 a90 90 0 0 1 180 0 z"/>
+          <g class="bot__eyes">
+            <circle class="bot__eye" cx="72" cy="88" r="15"/>
+            <circle class="bot__eye" cx="148" cy="88" r="15"/>
+            <circle class="bot__pupil" cx="72" cy="88" r="7"/>
+            <circle class="bot__pupil" cx="148" cy="88" r="7"/>
+          </g>
+          <rect class="bot__body" x="20" y="130" width="180" height="96" rx="22"/>
+          <text class="bot__label" x="110" y="190" text-anchor="middle">AMK</text>
+        </svg>
+        <span class="sticker sticker--a">Kotlin</span>
+        <span class="sticker sticker--b">SDUI</span>
+        <span class="sticker sticker--c">a11y</span>
+      </div>
+
+      <ul class="stats" aria-label="Numbers">
+        <li><strong data-years-since="2014-06">12</strong><span>years of mobile</span></li>
+        <li><strong>6</strong><span>companies</span></li>
+        <li><strong>2</strong><span>countries</span></li>
+        <li><strong>3M</strong><span>GoFood orders a day</span></li>
+      </ul>
+    </section>
+
+    <section id="wheel" class="panel" data-section="wheel">
+      <h2>Spin the Prijzenrad</h2>
+      <p class="section-lead">At Albert Heijn I built a real prize wheel for a summer campaign. This one is smaller. Every prize is a fact about me.</p>
+      <div class="wheel">
+        <div class="wheel__stage">
+          <div class="wheel__pointer" aria-hidden="true"></div>
+          <svg class="wheel__disc" viewBox="-110 -110 220 220" aria-hidden="true"></svg>
+          <button class="wheel__spin" type="button">Spin!</button>
+        </div>
+        <div class="wheel__prize" aria-live="polite">
+          <p class="wheel__prize-label">Your prize</p>
+          <h3 class="wheel__prize-title">Nothing yet</h3>
+          <p class="wheel__prize-text">Press the button. Nobody loses.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="journey" class="panel" data-section="journey">
+      <h2>All aboard: the journey so far</h2>
+      <p class="section-lead">Six stops between Bandung and Zaandam. Open a ticket to see what I did there.</p>
+      <ol class="track">
+        <li class="stop" style="--c: var(--mint)">
+          <details>
+            <summary>
+              <span class="stop__when">2022 – now</span>
+              <span class="stop__where">Zaandam</span>
+              <span class="stop__who">Albert Heijn</span>
+            </summary>
+            <div class="stop__body">
+              <p>Senior Software Engineer, Mobile Apps. I work on Checkout, Digital Wallet and Loyalty in the Albert Heijn app, with accessibility in every feature for the European Accessibility Act.</p>
+              <ul>
+                <li>Built My Wallet and the coupons on a server-driven UI, with each feature as a block.</li>
+                <li>Turned coupons into a catalog with filters, sorting and themes from the CMS.</li>
+                <li>Added iDEAL, debit card tokenization, digital koopzegels and gift cards to checkout.</li>
+                <li>Built the Prijzenrad summer campaign and the World Cup 2026 opt-in flow.</li>
+                <li>Split the Loyalty Wallet code into clear layers, with lint rules that guard the borders.</li>
+              </ul>
+            </div>
+          </details>
+        </li>
+        <li class="stop" style="--c: var(--sky)">
+          <details>
+            <summary>
+              <span class="stop__when">2021 – 2022</span>
+              <span class="stop__where">Amsterdam</span>
+              <span class="stop__who">Backbase</span>
+            </summary>
+            <div class="stop__body">
+              <p>Senior Software Engineer, Mobile Apps, in Retail Banking.</p>
+              <ul>
+                <li>Designed a unified omnipayment flow: many payment methods, one experience.</li>
+                <li>Delivered core banking features with the same behavior on every mobile channel.</li>
+              </ul>
+            </div>
+          </details>
+        </li>
+        <li class="stop" style="--c: var(--pink)">
+          <details>
+            <summary>
+              <span class="stop__when">2019 – 2020</span>
+              <span class="stop__where">Utrecht</span>
+              <span class="stop__who">Blendle</span>
+            </summary>
+            <div class="stop__body">
+              <p>Senior Software Engineer, Mobile Apps, for a premium news app that moved from pay per article to a subscription.</p>
+              <ul>
+                <li>Moved the old code to Kotlin and Clean Architecture.</li>
+                <li>Rebuilt the full app UI for the new brand.</li>
+                <li>Built a server-driven home page, so the backend could run A/B tests on the layout.</li>
+                <li>Added subscription payments with Stripe.</li>
+              </ul>
+            </div>
+          </details>
+        </li>
+        <li class="stop" style="--c: var(--tangerine)">
+          <details>
+            <summary>
+              <span class="stop__when">2017 – 2019</span>
+              <span class="stop__where">Jakarta</span>
+              <span class="stop__who">GoTo · GoFood</span>
+            </summary>
+            <div class="stop__body">
+              <p>Senior Software Engineer, Mobile Apps, for GoFood: more than 2.5 million daily customers and 3 million orders a day.</p>
+              <ul>
+                <li>Built the server-driven UI for the new GoFood home screen.</li>
+                <li>Ran remote configuration and A/B tests at scale.</li>
+                <li>Built order placement, live driver tracking and menu discovery.</li>
+                <li>Kept the app fast and stable at lunch-rush traffic.</li>
+              </ul>
+            </div>
+          </details>
+        </li>
+        <li class="stop" style="--c: var(--lemon)">
+          <details>
+            <summary>
+              <span class="stop__when">2014 – 2017</span>
+              <span class="stop__where">Rotterdam</span>
+              <span class="stop__who">NiceDay</span>
+            </summary>
+            <div class="stop__body">
+              <p>From Software Engineer to Senior, on a platform for mental health care.</p>
+              <ul>
+                <li>Led the patient app and the therapist app: log moods, track progress, talk securely.</li>
+                <li>Collected sensor data in the background without draining the battery.</li>
+              </ul>
+            </div>
+          </details>
+        </li>
+        <li class="stop" style="--c: var(--lilac)">
+          <details>
+            <summary>
+              <span class="stop__when">2012 – 2014</span>
+              <span class="stop__where">Bandung</span>
+              <span class="stop__who">Torche Indonesia</span>
+            </summary>
+            <div class="stop__body">
+              <p>Software Engineer, Web Apps. My first stop: PHP web apps for public sector clients, and the basics of databases and deployment.</p>
+              <p>In the same years, I finished a Bachelor's degree in Information Technology at Telkom University (2014).</p>
+            </div>
+          </details>
+        </li>
+      </ol>
+    </section>
+
+    <section id="powers" class="panel" data-section="powers">
+      <h2>Superpower coupons</h2>
+      <p class="section-lead">Clip the coupons that you need on your team. There is no limit per customer.</p>
+      <ul class="coupons">
+        <li><button class="coupon" type="button" aria-pressed="false" style="--c: var(--mint)">
+          <span class="coupon__tag">Server-Driven UI</span>
+          <span class="coupon__text">Screens that change without an app store release. Built at GoFood, Blendle and Albert Heijn.</span>
+        </button></li>
+        <li><button class="coupon" type="button" aria-pressed="false" style="--c: var(--tangerine)">
+          <span class="coupon__tag">Payments &amp; checkout</span>
+          <span class="coupon__text">Card tokenization, iDEAL, Stripe, digital wallets and one flow for many payment methods.</span>
+        </button></li>
+        <li><button class="coupon" type="button" aria-pressed="false" style="--c: var(--sky)">
+          <span class="coupon__tag">Kotlin &amp; architecture</span>
+          <span class="coupon__text">Old code into clean layers, with lint rules that keep the layers clean.</span>
+        </button></li>
+        <li><button class="coupon" type="button" aria-pressed="false" style="--c: var(--pink)">
+          <span class="coupon__tag">Accessibility</span>
+          <span class="coupon__text">TalkBack, focus order and contrast as the default, not as an afterthought.</span>
+        </button></li>
+        <li><button class="coupon" type="button" aria-pressed="false" style="--c: var(--lemon)">
+          <span class="coupon__tag">Cross-platform</span>
+          <span class="coupon__text">Android first, and at home in iOS, Flutter and React Native code.</span>
+        </button></li>
+        <li><button class="coupon" type="button" aria-pressed="false" style="--c: var(--lilac)">
+          <span class="coupon__tag">Developer experience</span>
+          <span class="coupon__text">Shared components, navigation and standards that other teams like to build on.</span>
+        </button></li>
+      </ul>
+      <p class="coupons__count" aria-live="polite">0 coupons clipped</p>
+    </section>
+
+    <section id="extras" class="panel" data-section="extras">
+      <h2>Bonus points</h2>
+      <ul class="extras">
+        <li class="extra"><span class="extra__icon" aria-hidden="true">🎤</span><div><h3>Speaker</h3><p>Unidirectional data flow in iOS, at SwiftyID Meetup #2 (2018).</p></div></li>
+        <li class="extra"><span class="extra__icon" aria-hidden="true">🎓</span><div><h3>Guest lecturer</h3><p>Agile product development, at Widyatama University (2018).</p></div></li>
+        <li class="extra"><span class="extra__icon" aria-hidden="true">🏉</span><div><h3>Professional Scrum Master I</h3><p>Certified by Scrum.org in 2017.</p></div></li>
+        <li class="extra"><span class="extra__icon" aria-hidden="true">🗣️</span><div><h3>Languages</h3><p>Indonesian (native) and English (professional). Dutch: ik doe mijn best.</p></div></li>
+      </ul>
+    </section>
+
+    <section id="contact" class="panel contact" data-section="contact">
+      <h2>Last stop: say hoi</h2>
+      <p class="section-lead">Want to talk about mobile architecture, Server-Driven UI, or the best way to spin a wheel? Send me a message.</p>
+      <div class="contact__links">
+        <a class="btn btn--primary" href="mailto:ahmadmuhsink@gmail.com">ahmadmuhsink@gmail.com</a>
+        <a class="btn" href="https://www.linkedin.com/in/ahmadmuhsinkurnia/" rel="me">LinkedIn</a>
+        <a class="btn" href="https://github.com/ahmadmuhsink" rel="me">GitHub</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Made by hand with HTML, CSS and a little JavaScript. No frameworks were harmed.</p>
+    <p class="footer__secret">Psst: ↑ ↑ ↓ ↓ ← → ← → B A</p>
+  </footer>
+
+  <div class="toast" role="status" aria-live="polite" hidden></div>
+  <canvas class="confetti" aria-hidden="true"></canvas>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
