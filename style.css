@@ -812,6 +812,18 @@ main {
   border: var(--line);
   border-radius: 50%;
   background: var(--c);
+  cursor: pointer;
+}
+
+/* A 44px tap area around the dot. script.js sends the train to a tapped dot. */
+.stop::after {
+  content: "";
+  position: absolute;
+  top: calc(1.75rem - 22px);
+  left: calc(-1.5rem - 22px);
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
 }
 
 .stop details {

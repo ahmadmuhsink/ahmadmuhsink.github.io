@@ -312,6 +312,8 @@
   const buffer = document.querySelector(".track__buffer");
   const train = document.querySelector(".train");
   const openStops = [];
+  // A stop whose dot was tapped. The train drives there first, then the stop opens.
+  let pendingStop = null;
 
   function isOpen(details) {
     return details.open && !details.classList.contains("is-closing");
@@ -322,7 +324,7 @@
     // The train is positioned from inside the border of the section.
     const box = journey.getBoundingClientRect();
     const origin = { left: box.left + journey.clientLeft, top: box.top + journey.clientTop };
-    const target = openStops.findLast(isOpen);
+    const target = pendingStop || openStops.findLast(isOpen);
     // The track and the dots are centered 1rem from the left of the list.
     const x = track.getBoundingClientRect().left - origin.left + rem - train.offsetWidth / 2;
     let y;
@@ -334,16 +336,46 @@
     }
     // Compares with the drawn position, because a move can start while the train is still driving.
     const current = train.getBoundingClientRect().top - origin.top;
-    if (turn && Math.abs(y - current) > 2) train.dataset.direction = y < current ? "up" : "down";
+    const moves = Math.abs(y - current) > 2;
+    if (turn && moves) train.dataset.direction = y < current ? "up" : "down";
     train.style.transform = `translate(${x}px, ${y}px)`;
+    return moves;
   }
 
   function trainFollows(details) {
     const index = openStops.indexOf(details);
     if (index !== -1) openStops.splice(index, 1);
-    if (isOpen(details)) openStops.push(details);
+    if (isOpen(details)) {
+      openStops.push(details);
+      // A stop that the visitor opens wins over a trip to a tapped dot.
+      if (details !== pendingStop) pendingStop = null;
+    }
     moveTrain(true);
   }
+
+  function arrive() {
+    if (!pendingStop) return;
+    const details = pendingStop;
+    pendingStop = null;
+    if (isOpen(details)) {
+      trainFollows(details);
+    } else {
+      details.querySelector("summary").click();
+    }
+  }
+
+  train.addEventListener("transitionend", (event) => {
+    if (event.target === train && event.propertyName === "transform") arrive();
+  });
+
+  // A tap on a dot targets the stop itself, because the dot is a pseudo-element of the stop.
+  document.querySelectorAll(".stop").forEach((stop) => {
+    stop.addEventListener("click", (event) => {
+      if (event.target !== stop) return;
+      pendingStop = stop.querySelector("details");
+      if (!moveTrain(true) || reducedMotion.matches) arrive();
+    });
+  });
 
   moveTrain();
   train.getBoundingClientRect();
