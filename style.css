@@ -475,7 +475,8 @@ main {
   z-index: 15;
   width: 9.5rem;
   padding: 0.6rem;
-  background: var(--lemon);
+  /* Albert Heijn blue. Dark text, because white text on this blue fails the contrast check. */
+  background: #00ade6;
   color: #1d1b2f;
   border: var(--line);
   border-radius: 14px;
@@ -506,12 +507,13 @@ main {
   aspect-ratio: 1;
   border: 2px dashed #1d1b2f;
   border-radius: 50%;
-  background: #fff6e6;
+  background: #ffffff;
 }
 
 .stampcard__grid li.is-stamped {
   border-style: solid;
-  background: var(--tangerine);
+  /* Albert Heijn Bonus orange. */
+  background: #ff7900;
   animation: stamp 0.35s ease-out;
 }
 
@@ -590,7 +592,14 @@ main {
   height: 100%;
   border-radius: 50%;
   box-shadow: var(--shadow);
+  cursor: grab;
+  touch-action: none;
   transition: transform 4.5s cubic-bezier(0.15, 0.85, 0.2, 1);
+}
+
+.wheel__disc.is-dragging {
+  cursor: grabbing;
+  transition: none;
 }
 
 .wheel__disc text {
@@ -692,7 +701,7 @@ main {
   display: grid;
   gap: 1.25rem;
   margin: 0;
-  padding: 0 0 1.25rem 2.5rem;
+  padding: 0 0 3rem 2.5rem;
   list-style: none;
 }
 
@@ -710,6 +719,72 @@ main {
   border-right: 3px solid var(--ink);
   background: repeating-linear-gradient(to bottom, transparent 0 10px, var(--ink) 10px 13px);
   mask-image: linear-gradient(to bottom, transparent, #000 2.5rem);
+}
+
+.journey {
+  position: relative;
+}
+
+/* script.js sets the position, so that the train drives to the dot of the open stop. */
+.train {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 52px;
+  pointer-events: none;
+}
+
+.train.is-ready {
+  transition: transform 0.9s ease-in-out;
+}
+
+.train__art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transition: transform 0.3s;
+}
+
+.train[data-direction="down"] .train__art {
+  transform: rotate(180deg);
+}
+
+.train__body {
+  fill: var(--tangerine);
+  stroke: var(--ink);
+  stroke-width: 2.5;
+}
+
+.train__light {
+  fill: var(--lemon);
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+
+/* The headlight shines only in dark mode. The beam turns with the train, so it always points forward. */
+.train__beam {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+:root[data-theme="dark"] .train__beam {
+  opacity: 1;
+}
+
+:root[data-theme="dark"] .train__light {
+  filter: drop-shadow(0 0 2px #ffd23f);
+}
+
+.train__chimney {
+  fill: #1d1b2f;
+}
+
+.train__cab {
+  fill: var(--sky);
+  stroke: var(--ink);
+  stroke-width: 2;
 }
 
 /* A buffer stop across the end of the rails, centered on them like the dots. */
@@ -944,8 +1019,19 @@ main {
   color: var(--ink);
 }
 
+/* A stamp on the bottom edge, positioned on the coupon, so a long tag does not wrap and change the row height. */
 .coupon[aria-pressed="true"] .coupon__tag::after {
-  content: " ✓ clipped";
+  content: "✓ Clipped";
+  position: absolute;
+  right: 1.2rem;
+  bottom: -0.85rem;
+  padding: 0.1rem 0.6rem;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.95rem;
+  transform: rotate(-6deg);
 }
 
 .coupons__count {

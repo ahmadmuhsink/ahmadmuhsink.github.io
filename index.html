@@ -80,8 +80,8 @@
 
       <ul class="stats" aria-label="Numbers">
         <li><strong data-years-since="2014-06">12</strong><span>years of mobile</span></li>
-        <li><strong>6</strong><span>companies</span></li>
         <li><strong>3M</strong><span>completed GoFood orders daily</span></li>
+        <li><strong>1.5M</strong><span>active Blendle readers across the EU</span></li>
         <li><strong>5.5M</strong><span>active Albert Heijn app users</span></li>
       </ul>
     </section>
@@ -98,12 +98,12 @@
         <div class="wheel__prize" aria-live="polite">
           <p class="wheel__prize-label">Your prize</p>
           <h3 class="wheel__prize-title">Nothing yet</h3>
-          <p class="wheel__prize-text">Press the button. Nobody loses.</p>
+          <p class="wheel__prize-text">Press the button or swipe the wheel. Nobody loses.</p>
         </div>
       </div>
     </section>
 
-    <section id="journey" class="panel" data-section="journey">
+    <section id="journey" class="panel journey" data-section="journey">
       <h2>All aboard: the journey so far</h2>
       <p class="section-lead">Six stops between Bandung and Zaandam. Open a ticket to see what I did there.</p>
       <ol class="track">
@@ -209,6 +209,21 @@
         </li>
       </ol>
       <div class="track__buffer" aria-hidden="true"></div>
+      <div class="train" aria-hidden="true">
+        <svg class="train__art" viewBox="0 0 24 52">
+          <defs>
+            <linearGradient id="train-beam" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0" stop-color="#ffd23f" stop-opacity="0.8"/>
+              <stop offset="1" stop-color="#ffd23f" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path class="train__beam" d="M9 7 L15 7 L26 -40 L-2 -40 Z" fill="url(#train-beam)"/>
+          <rect class="train__body" x="2" y="2" width="20" height="48" rx="7"/>
+          <circle class="train__light" cx="12" cy="8" r="2.5"/>
+          <circle class="train__chimney" cx="12" cy="18" r="3.5"/>
+          <rect class="train__cab" x="5.5" y="29" width="13" height="15" rx="3"/>
+        </svg>
+      </div>
     </section>
 
     <section id="powers" class="panel" data-section="powers">
@@ -265,7 +280,7 @@
   </main>
 
   <footer class="footer">
-    <p>Made by hand with HTML, CSS and a little JavaScript. No frameworks were harmed.</p>
+    <p>Made with HTML, CSS and a little JavaScript. No frameworks were harmed.</p>
     <p class="footer__secret">Psst: ↑ ↑ ↓ ↓ ← → ← → B A</p>
   </footer>
 

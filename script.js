@@ -231,7 +231,10 @@
     }
   }
 
-  spinButton.addEventListener("click", () => {
+  const normalize = (angle) => ((angle % 360) + 360) % 360;
+
+  // direction is 1 for clockwise and -1 for counterclockwise.
+  function spin(direction = 1, turns = 5) {
     let index;
     do {
       index = Math.floor(Math.random() * prizes.length);
@@ -239,8 +242,8 @@
     lastPrize = index;
 
     const target = (360 - (index * slice + slice / 2)) % 360;
-    const delta = (target - (rotation % 360) + 360) % 360;
-    rotation += 360 * 5 + delta;
+    const delta = direction > 0 ? normalize(target - rotation) : normalize(rotation - target);
+    rotation += direction * (360 * turns + delta);
     spinButton.disabled = true;
     prizeTitle.textContent = "Spinning…";
     prizeText.textContent = "Wait for it.";
@@ -251,13 +254,111 @@
     } else {
       disc.addEventListener("transitionend", () => revealPrize(index), { once: true });
     }
+  }
+
+  spinButton.addEventListener("click", () => spin());
+
+  // Swipe the wheel: it follows the pointer, and a fast release spins it.
+
+  let drag = null;
+
+  function pointerAngle(event) {
+    const box = disc.getBoundingClientRect();
+    const dx = event.clientX - (box.left + box.width / 2);
+    const dy = event.clientY - (box.top + box.height / 2);
+    return (Math.atan2(dy, dx) * 180) / Math.PI;
+  }
+
+  disc.addEventListener("pointerdown", (event) => {
+    if (spinButton.disabled) return;
+    disc.setPointerCapture(event.pointerId);
+    disc.classList.add("is-dragging");
+    drag = { angle: pointerAngle(event), samples: [{ rotation, time: event.timeStamp }] };
   });
+
+  disc.addEventListener("pointermove", (event) => {
+    if (!drag) return;
+    const angle = pointerAngle(event);
+    // Takes the short way around, so that the step does not jump by 360 degrees at the left of the wheel.
+    rotation += ((angle - drag.angle + 540) % 360) - 180;
+    drag.angle = angle;
+    drag.samples.push({ rotation, time: event.timeStamp });
+    disc.style.transform = `rotate(${rotation}deg)`;
+  });
+
+  function endDrag(event) {
+    if (!drag) return;
+    const recent = drag.samples.filter((sample) => event.timeStamp - sample.time < 100);
+    const first = recent[0] || drag.samples[drag.samples.length - 1];
+    const elapsed = event.timeStamp - first.time;
+    const speed = elapsed > 0 ? (rotation - first.rotation) / elapsed : 0;
+    drag = null;
+    disc.classList.remove("is-dragging");
+    // Starts the spin transition from the position of the drag.
+    disc.getBoundingClientRect();
+    // 0.3 degrees per millisecond is a flick. A slower release only turns the wheel.
+    if (event.type === "pointerup" && Math.abs(speed) >= 0.3) {
+      spin(Math.sign(speed), Math.min(8, Math.max(3, Math.round(Math.abs(speed) * 3))));
+    }
+  }
+
+  disc.addEventListener("pointerup", endDrag);
+  disc.addEventListener("pointercancel", endDrag);
+
+  // Train on the journey track
+
+  const journey = document.querySelector(".journey");
+  const track = document.querySelector(".track");
+  const buffer = document.querySelector(".track__buffer");
+  const train = document.querySelector(".train");
+  const openStops = [];
+
+  function isOpen(details) {
+    return details.open && !details.classList.contains("is-closing");
+  }
+
+  function moveTrain(turn = false) {
+    const rem = parseFloat(getComputedStyle(root).fontSize);
+    // The train is positioned from inside the border of the section.
+    const box = journey.getBoundingClientRect();
+    const origin = { left: box.left + journey.clientLeft, top: box.top + journey.clientTop };
+    const target = openStops.findLast(isOpen);
+    // The track and the dots are centered 1rem from the left of the list.
+    const x = track.getBoundingClientRect().left - origin.left + rem - train.offsetWidth / 2;
+    let y;
+    if (target) {
+      // A dot is 1.3rem high, 1.1rem below the top of its stop.
+      y = target.getBoundingClientRect().top - origin.top + 1.75 * rem - train.offsetHeight / 2;
+    } else {
+      y = buffer.getBoundingClientRect().top - origin.top - train.offsetHeight;
+    }
+    // Compares with the drawn position, because a move can start while the train is still driving.
+    const current = train.getBoundingClientRect().top - origin.top;
+    if (turn && Math.abs(y - current) > 2) train.dataset.direction = y < current ? "up" : "down";
+    train.style.transform = `translate(${x}px, ${y}px)`;
+  }
+
+  function trainFollows(details) {
+    const index = openStops.indexOf(details);
+    if (index !== -1) openStops.splice(index, 1);
+    if (isOpen(details)) openStops.push(details);
+    moveTrain(true);
+  }
+
+  moveTrain();
+  train.getBoundingClientRect();
+  train.classList.add("is-ready");
+  // Stops change height when they open, close or wrap, so the train follows its target.
+  new ResizeObserver(() => moveTrain()).observe(track);
 
   // Journey stops slide open and closed
 
   document.querySelectorAll(".stop details").forEach((details) => {
     const summary = details.querySelector("summary");
     let animation = null;
+
+    // Covers the open and close without animation, for example with reduced motion.
+    details.addEventListener("toggle", () => trainFollows(details));
 
     summary.addEventListener("click", (event) => {
       if (reducedMotion.matches) return;
@@ -273,6 +374,7 @@
       details.open = true;
 
       details.classList.toggle("is-closing", !opening);
+      trainFollows(details);
       details.style.overflow = "hidden";
       animation = details.animate({ height: [`${from}px`, `${to}px`] }, { duration: 280, easing: "ease-out" });
       animation.onfinish = () => {
