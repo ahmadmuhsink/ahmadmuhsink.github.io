@@ -159,7 +159,7 @@
     { label: "Kotlin", color: "#3ddc97", title: "Kotlin all the way", text: "At Blendle I moved the old codebase to Kotlin and Clean Architecture. Faster to build, easier to test." },
     { label: "SDUI", color: "#5aa9ff", title: "Server-Driven UI, three times", text: "GoFood, Blendle and Albert Heijn: screens that the backend draws, so teams change layouts without an app store release." },
     { label: "Payments", color: "#ff8a4c", title: "Money moves", text: "iDEAL, debit card tokenization, Stripe subscriptions, and one omnipayment flow for many payment methods at Backbase." },
-    { label: "a11y", color: "#ff7eb6", title: "Accessible by default", text: "I made Koopzegels and Coupons accessible, for the European Accessibility Act and for every user." },
+    { label: "World Cup", color: "#ff7eb6", title: "Kick-off: World Cup 2026", text: "I built the opt-in flow for the World Cup 2026 campaign in the Albert Heijn app, and the bridge that lets its web pages talk to the app." },
     { label: "3M orders", color: "#ffd23f", title: "Lunch rush, every day", text: "GoFood handled 3 million orders a day. I built order placement and live driver tracking for it." },
     { label: "Wheel!", color: "#b69cff", title: "Wheel inception", text: "You spin a prize wheel made by someone who built the real Prijzenrad in the Albert Heijn app." },
     { label: "Speaker", color: "#3ddc97", title: "On stage", text: "I talked about unidirectional data flow in iOS at SwiftyID Meetup #2, and gave a guest lecture on Agile." },
@@ -251,6 +251,37 @@
     } else {
       disc.addEventListener("transitionend", () => revealPrize(index), { once: true });
     }
+  });
+
+  // Journey stops slide open and closed
+
+  document.querySelectorAll(".stop details").forEach((details) => {
+    const summary = details.querySelector("summary");
+    let animation = null;
+
+    summary.addEventListener("click", (event) => {
+      if (reducedMotion.matches) return;
+      event.preventDefault();
+
+      const opening = !details.open || details.classList.contains("is-closing");
+      const from = details.offsetHeight;
+      animation?.cancel();
+
+      // Sets the end state for one synchronous layout, to measure its height without a paint.
+      details.open = opening;
+      const to = details.offsetHeight;
+      details.open = true;
+
+      details.classList.toggle("is-closing", !opening);
+      details.style.overflow = "hidden";
+      animation = details.animate({ height: [`${from}px`, `${to}px`] }, { duration: 280, easing: "ease-out" });
+      animation.onfinish = () => {
+        animation = null;
+        details.open = opening;
+        details.classList.remove("is-closing");
+        details.style.overflow = "";
+      };
+    });
   });
 
   // Coupons

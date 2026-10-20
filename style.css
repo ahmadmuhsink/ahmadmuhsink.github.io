@@ -18,7 +18,7 @@
 }
 
 :root[data-theme="dark"] {
-  --bg: #17152a;
+  --bg: #0a1330;
   --paper: #24213d;
   --ink: #f4efe2;
   --muted: #bdb8d6;
@@ -46,6 +46,15 @@ body {
   font-size: 1.0625rem;
   line-height: 1.6;
   transition: background-color 0.3s, color 0.3s;
+}
+
+/* Inter Milan colors: navy blue into black. */
+:root[data-theme="dark"] body {
+  background-image:
+    radial-gradient(color-mix(in srgb, var(--ink) 12%, transparent) 1.2px, transparent 1.2px),
+    linear-gradient(165deg, #0b2a6f 0%, #08163d 45%, #000000 100%);
+  background-size: 22px 22px, auto;
+  background-attachment: fixed;
 }
 
 h1,
@@ -442,12 +451,6 @@ main {
   font-weight: 600;
 }
 
-.stats .flags {
-  font-size: 1.5rem;
-  line-height: 1.3;
-  letter-spacing: 0.2em;
-}
-
 @media (max-width: 820px) {
   .hero {
     grid-template-columns: 1fr;
@@ -689,20 +692,35 @@ main {
   display: grid;
   gap: 1.25rem;
   margin: 0;
-  padding: 0 0 0 2.5rem;
+  padding: 0 0 1.25rem 2.5rem;
   list-style: none;
 }
 
 .track::before {
   content: "";
   position: absolute;
-  top: 0.5rem;
-  bottom: 0.5rem;
-  left: 0.9rem;
+  /* The rails run up into the margin of the lead text and fade out, because the journey goes on. */
+  top: -1.75rem;
+  /* Ends under the middle of the buffer stop. */
+  bottom: -0.45rem;
+  /* Centers the track on the stop dots: 2.5rem - 2.15rem + 1.3rem / 2 = 1rem. */
+  left: calc(1rem - 5px);
   width: 10px;
   border-left: 3px solid var(--ink);
   border-right: 3px solid var(--ink);
   background: repeating-linear-gradient(to bottom, transparent 0 10px, var(--ink) 10px 13px);
+  mask-image: linear-gradient(to bottom, transparent, #000 2.5rem);
+}
+
+/* A buffer stop across the end of the rails, centered on them like the dots. */
+.track__buffer {
+  position: relative;
+  width: 2.4rem;
+  height: 0.9rem;
+  margin-left: calc(1rem - 1.2rem);
+  border: 3px solid var(--ink);
+  border-radius: 4px;
+  background: repeating-linear-gradient(-45deg, #e63946 0 6px, #ffffff 6px 12px);
 }
 
 .stop {
@@ -767,6 +785,11 @@ main {
   transform: rotate(45deg);
 }
 
+/* script.js keeps the details open until the close animation ends, so the icon turns back at the start. */
+.stop details.is-closing summary::after {
+  transform: none;
+}
+
 .stop__when {
   padding: 0.15rem 0.6rem;
   border: 2px solid var(--ink);
@@ -779,9 +802,24 @@ main {
 }
 
 .stop__who {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-family: var(--font-display);
   font-size: 1.4rem;
   font-weight: 700;
+}
+
+/* A white tile keeps dark and light logos visible in both themes. */
+.stop__logo {
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  padding: 2px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: #ffffff;
+  object-fit: contain;
 }
 
 .stop__where {
@@ -853,6 +891,7 @@ main {
   transition: transform 0.2s, background-color 0.2s;
 }
 
+/* The notches are centered on the outer edge of the 3px border (22px / 2 + 3px = 14px), so they cover the whole border. */
 .coupon::before,
 .coupon::after {
   content: "";
@@ -867,12 +906,12 @@ main {
 }
 
 .coupon::before {
-  left: -13px;
+  left: -14px;
   clip-path: inset(0 0 0 50%);
 }
 
 .coupon::after {
-  right: -13px;
+  right: -14px;
   clip-path: inset(0 50% 0 0);
 }
 
@@ -897,6 +936,12 @@ main {
   background: var(--c);
   color: #1d1b2f;
   transform: rotate(1.5deg);
+}
+
+/* A clipped coupon swaps colors: the card takes the tag color, and the tag takes the card color. */
+.coupon[aria-pressed="true"] .coupon__tag {
+  background: color-mix(in srgb, var(--c) 30%, var(--paper));
+  color: var(--ink);
 }
 
 .coupon[aria-pressed="true"] .coupon__tag::after {

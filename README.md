@@ -25,5 +25,6 @@ GitHub Pages serves the `main` branch from the repository root. If you push to `
 - `style.css` holds the layout, the light and dark themes, and the animations.
 - `script.js` runs the prize wheel, the stamp card, the coupons, the typing text, and the Konami code.
 - `favicon.svg` is the robot icon in the browser tab.
+- `logos/` holds the company logos of the journey stops.
 
 The site respects the `prefers-reduced-motion` setting of the operating system. If this setting is on, the site shows no animations.
